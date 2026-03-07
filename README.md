@@ -31,11 +31,10 @@ wxgzh article.md
 要求：Node.js >= 18
 
 ```bash
-npm install
-npm run build
+npm install -g @lyhue1991/wxgzh
 ```
 
-如果你希望全局使用命令，也可以在发布或本地链接后通过 `wxgzh` 调用。
+安装完成后可直接使用 `wxgzh` 命令。
 
 ## 二、基本配置
 
@@ -401,7 +400,7 @@ wxgzh publish --article .wxgzh/article.html --cover .wxgzh/cover.jpg
 
 ## 开发与构建
 
-安装依赖：
+开发环境安装依赖：
 
 ```bash
 npm install

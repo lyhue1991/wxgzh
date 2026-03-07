@@ -1,10 +1,10 @@
 import { access, readFile } from 'node:fs/promises';
 import path from 'node:path';
 
+import { inline } from '@css-inline/css-inline';
 import * as cheerio from 'cheerio';
 import type { AnyNode, DataNode, Element } from 'domhandler';
 import hljs from 'highlight.js';
-import juice from 'juice';
 import MarkdownIt from 'markdown-it';
 import mathjax3 from 'markdown-it-mathjax3';
 
@@ -664,13 +664,11 @@ export async function renderMarkdownToHtml(body: string, metadata: ArticleMetada
   const customCss = await loadCustomCss();
   const articleHtml = $('article').html() ?? '';
   const baseHtml = createDocumentHtml(articleHtml, metadata);
-  const inlinedHtml = juice.inlineContent(baseHtml, `${themeCss}\n${HIGHLIGHT_INLINE_CSS}\n${WECHAT_BLOCKQUOTE_INLINE_CSS}\n${WECHAT_TABLE_INLINE_CSS}\n${WECHAT_MATH_INLINE_CSS}\n${customCss}`, {
-    removeStyleTags: true,
-    preserveMediaQueries: true,
-    preserveFontFaces: true,
+  const inlinedHtml = inline(baseHtml, {
+    extraCss: `${themeCss}\n${HIGHLIGHT_INLINE_CSS}\n${WECHAT_BLOCKQUOTE_INLINE_CSS}\n${WECHAT_TABLE_INLINE_CSS}\n${WECHAT_MATH_INLINE_CSS}\n${customCss}`,
+    keepAtRules: true,
     applyWidthAttributes: false,
-    applyHeightAttributes: false,
-    applyAttributesTableElements: true
+    applyHeightAttributes: false
   });
 
   return cleanInlinedHtml(inlinedHtml);
