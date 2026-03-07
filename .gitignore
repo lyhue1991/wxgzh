@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.wxgzh/
+*.log
+*.tmp
+*.html
+*.jpg
+*.jpeg
+*.png
