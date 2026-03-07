@@ -12,7 +12,6 @@
 - 支持主题样式、自定义 CSS、自动摘要、封面图生成。
 - 也支持分步执行，便于你单独检查 HTML、封面或发布结果。
 
-
 **操作方法**
 
 * step1: 一键安装（要求：Node.js >= 18）
@@ -40,7 +39,7 @@ wxgzh article.md --author 文章作者姓名
 
 1. 读取 `article.md`
 2. 转换成公众号可用 HTML
-3. 上传正文中的本地图片到微信
+3. 上传正文中的本地图片和非微信图床图片到微信公众号图床
 4. 自动生成封面图（如果你没有提供）
 5. 提交到微信公众号草稿箱
 
@@ -382,7 +381,10 @@ enableComment: true
 
 命令行参数优先级高于 Front Matter，Front Matter 又高于默认配置。
 
-## 支持的 Markdown 内容
+
+## 六，备忘清单
+
+### 1. 支持的 Markdown 内容
 
 本项目当前重点支持这些常见内容：
 
@@ -394,9 +396,10 @@ enableComment: true
 - 表格
 - 数学公式（行内与块级）
 
-## 常用命令速查
+### 2. 常用命令速查
 
 ```bash
+wxgzh --help  
 wxgzh article.md
 wxgzh config --list
 wxgzh config --list-themes
@@ -406,34 +409,4 @@ wxgzh cover --title "我的文章" --to .wxgzh/cover.jpg
 wxgzh publish --article .wxgzh/article.html --cover .wxgzh/cover.jpg
 ```
 
-## 开发与构建
 
-开发环境安装依赖：
-
-```bash
-npm install
-```
-
-类型检查：
-
-```bash
-npm run typecheck
-```
-
-构建：
-
-```bash
-npm run build
-```
-
-查看帮助：
-
-```bash
-node dist/cli/index.js --help
-```
-
-## 说明
-
-- 配置文件保存在用户目录下，不会写进项目源码目录。
-- `dist/` 是编译输出目录，日常修改应以 `src/` 为准。
-- 如果一键发布失败，建议改用“分步流程”逐步检查 `HTML`、图片上传和封面图。
