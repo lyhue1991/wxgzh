@@ -12,10 +12,28 @@
 - 支持主题样式、自定义 CSS、自动摘要、封面图生成。
 - 也支持分步执行，便于你单独检查 HTML、封面或发布结果。
 
-默认一键流程：
+
+**操作方法**
+
+* step1: 一键安装（要求：Node.js >= 18）
 
 ```bash
-wxgzh article.md
+npm install -g @lyhue1991/wxgzh
+```
+安装完成后可直接使用 `wxgzh` 命令。
+
+
+* step2: 一键配置 (提前准备好微信公众号AppID和 AppSecret ， 并配置好IP白名单)
+
+```bash
+wxgzh config --appid 你的AppID --appsecret 你的AppSecret 
+
+```
+
+* step3: 一键投稿 (将本地markdown文章直接投递到公众号草稿箱， 人工确认后即可发布)
+
+```bash
+wxgzh article.md --author 文章作者姓名
 ```
 
 这条命令会自动执行：
@@ -26,17 +44,9 @@ wxgzh article.md
 4. 自动生成封面图（如果你没有提供）
 5. 提交到微信公众号草稿箱
 
-## 安装
 
-要求：Node.js >= 18
 
-```bash
-npm install -g @lyhue1991/wxgzh
-```
-
-安装完成后可直接使用 `wxgzh` 命令。
-
-## 二、基本配置
+## 二、配置说明
 
 ### 1. 如何获取公众号 `appid` 和 `appsecret`
 
@@ -97,8 +107,6 @@ wxgzh config --list-themes
 ```
 
 当前内置主题来自 `styles/` 目录，例如：`default`、`blue`、`green`、`red`、`yellow`、`brown`、`black`、`orange`。
-
-
 
 
 ## 三、快速流程
