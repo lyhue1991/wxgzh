@@ -415,6 +415,7 @@ enableComment: true
 
 ```bash
 wxgzh --help  
+wxgzh --version
 wxgzh article.md
 wxgzh config --list
 wxgzh config --list-themes
@@ -423,5 +424,4 @@ wxgzh fix .wxgzh/article.html --no-upload
 wxgzh cover --title "我的文章" --to .wxgzh/cover.jpg
 wxgzh publish --article .wxgzh/article.html --cover .wxgzh/cover.jpg
 ```
-
 

@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -31,6 +32,17 @@ const EXAMPLES_TEXT = [
   '  $ wxgzh cover --title "我的文章" --to .wxgzh/cover.jpg',
   '  $ wxgzh publish --article .wxgzh/article.html --cover .wxgzh/cover.jpg'
 ].join('\n');
+
+function getCliVersion(): string {
+  const packageJsonPath = path.resolve(__dirname, '../../package.json');
+  const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8')) as { version?: unknown };
+
+  if (typeof packageJson.version !== 'string' || packageJson.version.trim() === '') {
+    throw new Error('读取版本号失败: package.json 中缺少有效的 version 字段');
+  }
+
+  return packageJson.version;
+}
 
 interface RootOptions {
   theme?: string;
@@ -112,6 +124,7 @@ async function main(): Promise<void> {
     .description('把 Markdown 文章处理成微信公众号草稿，支持主题、图片修复、封面生成与一键发布')
     .usage('[article.md] [options]')
     .helpOption('-h, --help', '查看帮助')
+    .version(getCliVersion(), '-V, --version', '查看版本')
     .showHelpAfterError('(使用 --help 查看完整帮助)')
     .argument('[article]', 'Markdown 文件路径；传入后会自动执行 md2html -> fix -> cover -> publish')
     .option('--theme <theme>', `指定主题名，可用值：${listAvailableThemes().join(', ')}`)

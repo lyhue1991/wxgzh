@@ -482,6 +482,7 @@ POST https://api.weixin.qq.com/cgi-bin/draft/add
 npm run typecheck
 npm run build
 node dist/cli/index.js --help
+node dist/cli/index.js --version
 node dist/cli/index.js config --help
 node dist/cli/index.js md2html --help
 node dist/cli/index.js fix --help
