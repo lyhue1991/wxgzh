@@ -10,6 +10,11 @@
 npx skills add lyhue1991/wxgzh
 ```
 
+效果演示
+
+![](wxgzh_shot1.png)
+![](wxgzh_shot2.png)
+
 
 ## 一、功能概述
 
