@@ -144,6 +144,36 @@ q table:last-child {
 }
 `;
 
+const WECHAT_LAYOUT_INLINE_CSS = `
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+dl,
+blockquote,
+q,
+pre,
+hr,
+section.img-wrapper,
+section.tbl-wrapper,
+section.math-block {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+section.img-wrapper,
+section.tbl-wrapper,
+section.math-block {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+`;
+
 const WECHAT_TABLE_INLINE_CSS = `
 section.tbl-wrapper {
   margin: 1.4em 3% !important;
@@ -665,7 +695,7 @@ export async function renderMarkdownToHtml(body: string, metadata: ArticleMetada
   const articleHtml = $('article').html() ?? '';
   const baseHtml = createDocumentHtml(articleHtml, metadata);
   const inlinedHtml = inline(baseHtml, {
-    extraCss: `${themeCss}\n${HIGHLIGHT_INLINE_CSS}\n${WECHAT_BLOCKQUOTE_INLINE_CSS}\n${WECHAT_TABLE_INLINE_CSS}\n${WECHAT_MATH_INLINE_CSS}\n${customCss}`,
+    extraCss: `${themeCss}\n${HIGHLIGHT_INLINE_CSS}\n${WECHAT_BLOCKQUOTE_INLINE_CSS}\n${WECHAT_TABLE_INLINE_CSS}\n${WECHAT_MATH_INLINE_CSS}\n${WECHAT_LAYOUT_INLINE_CSS}\n${customCss}`,
     keepAtRules: true,
     applyWidthAttributes: false,
     applyHeightAttributes: false
