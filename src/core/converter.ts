@@ -356,6 +356,10 @@ function isTextNodeEmpty(node: AnyNode): boolean {
   return node.type === 'text' && !node.data.trim();
 }
 
+function isTagNode(node: AnyNode, tagName: string): node is Element {
+  return node.type === 'tag' && node.tagName.toLowerCase() === tagName;
+}
+
 function isStandaloneImageParagraph($paragraph: cheerio.Cheerio<any>): boolean {
   const nodes = $paragraph.contents().toArray().filter((node) => !isTextNodeEmpty(node));
   return nodes.every((node) => node.type === 'tag' && ['img', 'br'].includes((node as Element).tagName.toLowerCase()));
@@ -404,10 +408,41 @@ async function loadCustomCss(): Promise<string> {
 function normalizeListItems($: cheerio.CheerioAPI): void {
   $('li').each((_, element) => {
     const $item = $(element);
-    const childElements = $item
-      .contents()
-      .toArray()
-      .filter((node) => !isTextNodeEmpty(node));
+    const initialChildren = $item.contents().toArray();
+    const hasParagraphChild = initialChildren.some((node) => isTagNode(node, 'p'));
+
+    if (hasParagraphChild) {
+      const fragments: string[] = [];
+      let previousWasParagraph = false;
+
+      for (const node of initialChildren) {
+        if (isTextNodeEmpty(node)) {
+          continue;
+        }
+
+        if (isTagNode(node, 'p')) {
+          const paragraphHtml = renderSoftBreakFriendlyHtml(node.children ?? []);
+          if (!paragraphHtml.trim()) {
+            continue;
+          }
+
+          if (previousWasParagraph) {
+            fragments.push('<br>');
+          }
+
+          fragments.push(paragraphHtml);
+          previousWasParagraph = true;
+          continue;
+        }
+
+        fragments.push(renderSoftBreakFriendlyNode(node, true));
+        previousWasParagraph = false;
+      }
+
+      $item.html(fragments.join(''));
+    }
+
+    const childElements = $item.contents().toArray().filter((node) => !isTextNodeEmpty(node));
 
     if (childElements.length === 0) {
       return;
@@ -418,12 +453,12 @@ function normalizeListItems($: cheerio.CheerioAPI): void {
         return false;
       }
 
-      const tagName = (node as Element).tagName.toLowerCase();
+      const tagName = node.tagName.toLowerCase();
       return ['p', 'ul', 'ol', 'section', 'blockquote', 'pre', 'table'].includes(tagName);
     });
 
     const firstChild = childElements[0];
-    if (!hasBlockChild && firstChild?.type === 'tag' && (firstChild as Element).tagName.toLowerCase() === 'span' && childElements.length === 1) {
+    if (!hasBlockChild && isTagNode(firstChild, 'span') && childElements.length === 1) {
       return;
     }
 
@@ -619,6 +654,86 @@ function setInlineStyleProperty(existingStyle: string | undefined, property: str
     .join('; ');
 }
 
+function removeInlineStyleProperties(existingStyle: string | undefined, properties: string[]): string | undefined {
+  if (!existingStyle) {
+    return undefined;
+  }
+
+  const propertiesToRemove = new Set(properties.map((property) => property.trim().toLowerCase()).filter(Boolean));
+  const declarations = existingStyle
+    .split(';')
+    .map((declaration) => declaration.trim())
+    .filter(Boolean)
+    .filter((declaration) => {
+      const separatorIndex = declaration.indexOf(':');
+      if (separatorIndex === -1) {
+        return true;
+      }
+
+      const name = declaration.slice(0, separatorIndex).trim().toLowerCase();
+      return !propertiesToRemove.has(name);
+    });
+
+  if (declarations.length === 0) {
+    return undefined;
+  }
+
+  return declarations.join('; ');
+}
+
+function normalizeInlinedListStyles($: cheerio.CheerioAPI): void {
+  $('ol').each((_, element) => {
+    const $list = $(element);
+    const depth = $list.parents('ol').length;
+    const cleanedStyle = removeInlineStyleProperties($list.attr('style'), ['list-style', 'list-style-type', 'list-style-position']);
+    const listType = depth === 0 ? '1' : depth === 1 ? 'a' : 'i';
+
+    if (cleanedStyle) {
+      $list.attr('style', cleanedStyle);
+    } else {
+      $list.removeAttr('style');
+    }
+
+    $list.attr('type', listType);
+  });
+
+  $('ul').each((_, element) => {
+    const $list = $(element);
+    const cleanedStyle = removeInlineStyleProperties($list.attr('style'), ['list-style', 'list-style-type', 'list-style-position']);
+
+    if (cleanedStyle) {
+      $list.attr('style', cleanedStyle);
+      return;
+    }
+
+    $list.removeAttr('style');
+  });
+
+  $('ol > li, ul > li').each((_, element) => {
+    const $item = $(element);
+    const cleanedStyle = removeInlineStyleProperties($item.attr('style'), ['list-style', 'list-style-type', 'list-style-position']);
+
+    if (cleanedStyle) {
+      $item.attr('style', cleanedStyle);
+      return;
+    }
+
+    $item.removeAttr('style');
+  });
+}
+
+function removeWechatUnsafeListWhitespace($: cheerio.CheerioAPI): void {
+  $('ol, ul').each((_, element) => {
+    $(element)
+      .contents()
+      .toArray()
+      .filter((node) => isTextNodeEmpty(node))
+      .forEach((node) => {
+        $(node).remove();
+      });
+  });
+}
+
 function cleanInlinedHtml(html: string): string {
   const $ = cheerio.load(html);
 
@@ -626,6 +741,9 @@ function cleanInlinedHtml(html: string): string {
     const $element = $(element);
     $element.html(renderWechatFriendlyCodeHtml($element.contents().toArray()));
   });
+
+  normalizeInlinedListStyles($);
+  removeWechatUnsafeListWhitespace($);
 
   const $article = $('body > #write > article').first();
   const $firstChild = $article.children().first();
