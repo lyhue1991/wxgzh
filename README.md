@@ -1,6 +1,6 @@
-# wxgzh
+# wxgzh，这个SKILL打通了AI写公众号文章的最后一公里
 
-一个面向微信公众号的 SKILL，基于 NodeJS CLI.
+这是一个面向微信公众号的 SKILL，基于 NodeJS CLI.
 
 把 Markdown 文章处理成适合公众号发布的 HTML，上传图片，生成封面，并提交到公众号草稿箱。
 
@@ -13,6 +13,7 @@ npx skills add lyhue1991/wxgzh
 效果演示
 
 ![](wxgzh_shot1.png)
+
 ![](wxgzh_shot2.png)
 
 

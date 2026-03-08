@@ -228,6 +228,33 @@ section.tbl-wrapper a {
 }
 `;
 
+const WECHAT_CODE_BLOCK_INLINE_CSS = `
+pre {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+pre code.hljs,
+pre code[class*="language-"] {
+  display: block !important;
+  width: max-content !important;
+  min-width: 100% !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  overflow: visible !important;
+}
+
+pre code.hljs *,
+pre code[class*="language-"] * {
+  white-space: inherit !important;
+  word-break: inherit !important;
+  overflow-wrap: inherit !important;
+}
+`;
+
 const WECHAT_MATH_INLINE_CSS = `
 span.math-inline {
   display: inline-block !important;
@@ -623,62 +650,76 @@ function createDocumentHtml(content: string, metadata: ArticleMetadata): string 
 }
 
 function setInlineStyleProperty(existingStyle: string | undefined, property: string, value: string): string {
-  const entries = new Map<string, string>();
+  const entries = parseInlineStyle(existingStyle);
 
-  if (existingStyle) {
-    for (const declaration of existingStyle.split(';')) {
-      const trimmed = declaration.trim();
-      if (!trimmed) {
-        continue;
-      }
+  entries.set(property, value);
 
-      const separatorIndex = trimmed.indexOf(':');
-      if (separatorIndex === -1) {
-        continue;
-      }
+  return stringifyInlineStyle(entries) ?? '';
+}
 
-      const name = trimmed.slice(0, separatorIndex).trim();
-      const declarationValue = trimmed.slice(separatorIndex + 1).trim();
-      if (!name || !declarationValue) {
-        continue;
-      }
+function removeInlineStyleProperties(existingStyle: string | undefined, properties: string[]): string | undefined {
+  const entries = parseInlineStyle(existingStyle);
+  const propertiesToRemove = new Set(properties.map((property) => property.trim().toLowerCase()).filter(Boolean));
 
-      entries.set(name, declarationValue);
+  for (const name of Array.from(entries.keys())) {
+    if (propertiesToRemove.has(name.toLowerCase())) {
+      entries.delete(name);
     }
   }
 
-  entries.set(property, value);
+  return stringifyInlineStyle(entries);
+}
+
+function parseInlineStyle(existingStyle: string | undefined): Map<string, string> {
+  const entries = new Map<string, string>();
+
+  if (!existingStyle) {
+    return entries;
+  }
+
+  for (const declaration of existingStyle.split(';')) {
+    const trimmed = declaration.trim();
+    if (!trimmed) {
+      continue;
+    }
+
+    const separatorIndex = trimmed.indexOf(':');
+    if (separatorIndex === -1) {
+      continue;
+    }
+
+    const name = trimmed.slice(0, separatorIndex).trim();
+    const declarationValue = trimmed.slice(separatorIndex + 1).trim();
+    if (!name || !declarationValue) {
+      continue;
+    }
+
+    entries.set(name, declarationValue);
+  }
+
+  return entries;
+}
+
+function stringifyInlineStyle(entries: Map<string, string>): string | undefined {
+  if (entries.size === 0) {
+    return undefined;
+  }
 
   return Array.from(entries.entries())
     .map(([name, declarationValue]) => `${name}: ${declarationValue}`)
     .join('; ');
 }
 
-function removeInlineStyleProperties(existingStyle: string | undefined, properties: string[]): string | undefined {
-  if (!existingStyle) {
-    return undefined;
+function getInlineStyleProperty(existingStyle: string | undefined, property: string): string | undefined {
+  const entries = parseInlineStyle(existingStyle);
+
+  for (const [name, declarationValue] of entries.entries()) {
+    if (name.trim().toLowerCase() === property.trim().toLowerCase()) {
+      return declarationValue;
+    }
   }
 
-  const propertiesToRemove = new Set(properties.map((property) => property.trim().toLowerCase()).filter(Boolean));
-  const declarations = existingStyle
-    .split(';')
-    .map((declaration) => declaration.trim())
-    .filter(Boolean)
-    .filter((declaration) => {
-      const separatorIndex = declaration.indexOf(':');
-      if (separatorIndex === -1) {
-        return true;
-      }
-
-      const name = declaration.slice(0, separatorIndex).trim().toLowerCase();
-      return !propertiesToRemove.has(name);
-    });
-
-  if (declarations.length === 0) {
-    return undefined;
-  }
-
-  return declarations.join('; ');
+  return undefined;
 }
 
 function normalizeInlinedListStyles($: cheerio.CheerioAPI): void {
@@ -734,6 +775,108 @@ function removeWechatUnsafeListWhitespace($: cheerio.CheerioAPI): void {
   });
 }
 
+function normalizeWechatCodeBlocks($: cheerio.CheerioAPI): void {
+  const backgroundStyleProperties = [
+    'background',
+    'background-color',
+    'background-image',
+    'background-repeat',
+    'background-position',
+    'background-size'
+  ];
+  const codeStyleProperties = [
+    ...backgroundStyleProperties,
+    'border',
+    'border-top',
+    'border-right',
+    'border-bottom',
+    'border-left',
+    'border-color',
+    'border-style',
+    'border-width',
+    'border-radius',
+    'box-shadow',
+    'padding',
+    'padding-top',
+    'padding-right',
+    'padding-bottom',
+    'padding-left'
+  ];
+  const wrapperStyleProperties = ['margin', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left'];
+
+  $('pre').each((_, element) => {
+    const $pre = $(element);
+    const $code = $pre.children('code').first();
+    if ($code.length === 0) {
+      return;
+    }
+
+    if (!$pre.parent().is('section.code-block-wrapper')) {
+      $pre.wrap('<section class="code-block-wrapper"></section>');
+    }
+
+    const $wrapper = $pre.parent();
+    const codeStyle = $code.attr('style');
+    const preStyle = $pre.attr('style');
+
+    for (const property of wrapperStyleProperties) {
+      const value = getInlineStyleProperty(codeStyle, property) ?? getInlineStyleProperty(preStyle, property);
+      if (!value) {
+        continue;
+      }
+
+      $wrapper.attr('style', setInlineStyleProperty($wrapper.attr('style'), property, value));
+    }
+
+    $wrapper.attr('style', setInlineStyleProperty($wrapper.attr('style'), 'display', 'block !important'));
+    $wrapper.attr('style', setInlineStyleProperty($wrapper.attr('style'), 'overflow-x', 'auto !important'));
+    $wrapper.attr('style', setInlineStyleProperty($wrapper.attr('style'), 'overflow-y', 'hidden !important'));
+    $wrapper.attr('style', setInlineStyleProperty($wrapper.attr('style'), '-webkit-overflow-scrolling', 'touch'));
+
+    for (const property of codeStyleProperties) {
+      const value = getInlineStyleProperty(codeStyle, property);
+      if (!value) {
+        continue;
+      }
+
+      $pre.attr('style', setInlineStyleProperty($pre.attr('style'), property, value));
+    }
+
+    $pre.attr('style', removeInlineStyleProperties($pre.attr('style'), wrapperStyleProperties));
+    $pre.attr('style', setInlineStyleProperty($pre.attr('style'), 'display', 'inline-block !important'));
+    $pre.attr('style', setInlineStyleProperty($pre.attr('style'), 'width', 'max-content !important'));
+    $pre.attr('style', setInlineStyleProperty($pre.attr('style'), 'min-width', '100% !important'));
+    $pre.attr('style', setInlineStyleProperty($pre.attr('style'), 'max-width', 'none !important'));
+    $pre.attr('style', setInlineStyleProperty($pre.attr('style'), 'box-sizing', 'border-box !important'));
+    $pre.attr('style', setInlineStyleProperty($pre.attr('style'), 'white-space', 'normal !important'));
+    $pre.attr('style', setInlineStyleProperty($pre.attr('style'), 'word-break', 'normal !important'));
+    $pre.attr('style', setInlineStyleProperty($pre.attr('style'), 'overflow', 'visible !important'));
+    $pre.attr('style', setInlineStyleProperty($pre.attr('style'), 'vertical-align', 'top !important'));
+
+    $code.attr('style', removeInlineStyleProperties($code.attr('style'), [...codeStyleProperties, ...wrapperStyleProperties]));
+    $code.attr('style', setInlineStyleProperty($code.attr('style'), 'display', 'inline-block !important'));
+    $code.attr('style', setInlineStyleProperty($code.attr('style'), 'width', 'max-content !important'));
+    $code.attr('style', setInlineStyleProperty($code.attr('style'), 'min-width', '100% !important'));
+    $code.attr('style', setInlineStyleProperty($code.attr('style'), 'max-width', 'none !important'));
+    $code.attr('style', setInlineStyleProperty($code.attr('style'), 'white-space', 'nowrap !important'));
+    $code.attr('style', setInlineStyleProperty($code.attr('style'), 'word-break', 'normal !important'));
+    $code.attr('style', setInlineStyleProperty($code.attr('style'), 'overflow-wrap', 'normal !important'));
+    $code.attr('style', setInlineStyleProperty($code.attr('style'), 'border', '0 !important'));
+    $code.attr('style', setInlineStyleProperty($code.attr('style'), 'border-radius', '0 !important'));
+    $code.attr('style', setInlineStyleProperty($code.attr('style'), 'padding', '0 !important'));
+    $code.attr('style', setInlineStyleProperty($code.attr('style'), 'margin', '0 !important'));
+
+    for (const property of backgroundStyleProperties) {
+      const value = getInlineStyleProperty(codeStyle, property) ?? getInlineStyleProperty(preStyle, property);
+      if (!value) {
+        continue;
+      }
+
+      $code.attr('style', setInlineStyleProperty($code.attr('style'), property, value));
+    }
+  });
+}
+
 function cleanInlinedHtml(html: string): string {
   const $ = cheerio.load(html);
 
@@ -744,6 +887,7 @@ function cleanInlinedHtml(html: string): string {
 
   normalizeInlinedListStyles($);
   removeWechatUnsafeListWhitespace($);
+  normalizeWechatCodeBlocks($);
 
   const $article = $('body > #write > article').first();
   const $firstChild = $article.children().first();
@@ -813,7 +957,7 @@ export async function renderMarkdownToHtml(body: string, metadata: ArticleMetada
   const articleHtml = $('article').html() ?? '';
   const baseHtml = createDocumentHtml(articleHtml, metadata);
   const inlinedHtml = inline(baseHtml, {
-    extraCss: `${themeCss}\n${HIGHLIGHT_INLINE_CSS}\n${WECHAT_BLOCKQUOTE_INLINE_CSS}\n${WECHAT_TABLE_INLINE_CSS}\n${WECHAT_MATH_INLINE_CSS}\n${WECHAT_LAYOUT_INLINE_CSS}\n${customCss}`,
+    extraCss: `${themeCss}\n${HIGHLIGHT_INLINE_CSS}\n${WECHAT_BLOCKQUOTE_INLINE_CSS}\n${WECHAT_TABLE_INLINE_CSS}\n${WECHAT_CODE_BLOCK_INLINE_CSS}\n${WECHAT_MATH_INLINE_CSS}\n${WECHAT_LAYOUT_INLINE_CSS}\n${customCss}`,
     keepAtRules: true,
     applyWidthAttributes: false,
     applyHeightAttributes: false
