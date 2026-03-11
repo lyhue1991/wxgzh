@@ -1,6 +1,6 @@
 {
   "name": "@lyhue1991/wxgzh",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Markdown to WeChat Official Account draft CLI",
   "license": "MIT",
   "main": "dist/cli/index.js",
@@ -37,6 +37,7 @@
     "markdown-it": "^14.1.0",
     "markdown-it-mathjax3": "^5.2.0",
     "mathjax": "^4.1.1",
+    "opentype.js": "^1.3.4",
     "sharp": "^0.33.5"
   },
   "devDependencies": {

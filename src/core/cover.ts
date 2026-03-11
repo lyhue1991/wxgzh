@@ -1,7 +1,8 @@
-import { readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 
-import sharp from 'sharp';
+import { parse, type BoundingBox, type Font, type Path } from 'opentype.js';
+import sharp, { type OverlayOptions } from 'sharp';
 
 export interface CoverOptions {
   title: string;
@@ -14,10 +15,32 @@ export interface CoverOptions {
 }
 
 const BUILTIN_BACKGROUND_DIR = path.resolve(__dirname, '../../assets/backgrounds');
+const COVER_TITLE_FONT_PATH = path.resolve(__dirname, '../../assets/fonts/仓耳小丸子.ttf');
 const FALLBACK_GRADIENT = {
   start: '#e8f3ef',
   end: '#c9ded6'
 };
+const DEFAULT_TITLE_LINE_LENGTH = 15;
+const COVER_TEXT_COLOR = '#000000b8';
+
+let cachedCoverFont: Font | undefined;
+
+interface FontMetrics {
+  ascender: number;
+  lineHeight: number;
+}
+
+interface GlyphOutline {
+  pathData: string;
+  width: number;
+  x1: number;
+  x2: number;
+}
+
+interface PositionedPath {
+  right: number;
+  path: string;
+}
 
 function escapeXml(value: string): string {
   return value
@@ -28,8 +51,18 @@ function escapeXml(value: string): string {
     .replace(/'/g, '&apos;');
 }
 
-function escapeAttribute(value: string): string {
-  return escapeXml(value);
+function getCoverFont(): Font | undefined {
+  if (!existsSync(COVER_TITLE_FONT_PATH)) {
+    return undefined;
+  }
+
+  if (!cachedCoverFont) {
+    const fontBuffer = readFileSync(COVER_TITLE_FONT_PATH);
+    const arrayBuffer = fontBuffer.buffer.slice(fontBuffer.byteOffset, fontBuffer.byteOffset + fontBuffer.byteLength);
+    cachedCoverFont = parse(arrayBuffer);
+  }
+
+  return cachedCoverFont;
 }
 
 function readFiles(dirPath: string, pattern: RegExp): string[] {
@@ -98,38 +131,112 @@ function buildGradientBackground(width: number, height: number): Buffer {
   return Buffer.from(svg);
 }
 
+function getFontLineMetrics(font: Font, fontSize: number): FontMetrics {
+  const unitsPerEm = font.unitsPerEm || 1000;
+  const ascender = Math.round(font.ascender / unitsPerEm * fontSize);
+  const descender = Math.abs(Math.round(font.descender / unitsPerEm * fontSize));
+  return {
+    ascender,
+    lineHeight: Math.max(Math.round((ascender + descender) * 1.08), fontSize)
+  };
+}
+
+function buildFontPath(font: Font, text: string, fontSize: number): GlyphOutline {
+  const pathObject: Path = font.getPath(text, 0, 0, fontSize);
+  const box: BoundingBox = pathObject.getBoundingBox();
+  return {
+    pathData: pathObject.toPathData(3),
+    width: Math.max(box.x2 - box.x1, 0),
+    x1: box.x1,
+    x2: box.x2
+  };
+}
+
+function buildPathElement(pathData: string, x: number, y: number): string {
+  return `<path d="${pathData}" transform="translate(${x.toFixed(3)} ${y.toFixed(3)})" fill="${COVER_TEXT_COLOR}" />`;
+}
+
+function buildTitlePath(
+  font: Font,
+  line: string,
+  index: number,
+  canvasWidth: number,
+  titleTop: number,
+  lineHeight: number,
+  ascender: number,
+  fontSize: number
+): PositionedPath {
+  const glyphPath = buildFontPath(font, line, fontSize);
+  const baselineY = titleTop + index * lineHeight + ascender;
+  const startX = (canvasWidth - glyphPath.width) / 2 - glyphPath.x1;
+
+  return {
+    right: startX + glyphPath.x2,
+    path: buildPathElement(glyphPath.pathData, startX, baselineY)
+  };
+}
+
+function buildAuthorPath(
+  font: Font,
+  text: string,
+  fontSize: number,
+  right: number,
+  baselineY: number
+): string {
+  const glyphPath = buildFontPath(font, text, fontSize);
+  const startX = right - glyphPath.x2;
+  return buildPathElement(glyphPath.pathData, startX, baselineY);
+}
+
 function buildTextSvg(params: {
   title: string;
   author: string;
   width: number;
   height: number;
-}): Buffer {
-  const lines = buildTitleLines(params.title, 10);
+}): Buffer | undefined {
+  const font = getCoverFont();
+  if (!font) {
+    return undefined;
+  }
+
+  const lines = buildTitleLines(params.title, DEFAULT_TITLE_LINE_LENGTH);
   const sizes = estimateFontSize(params.width, lines);
-  const lineHeight = Math.round(sizes.title * 1.15);
+  const titleMetrics = getFontLineMetrics(font, sizes.title);
+  const authorMetrics = getFontLineMetrics(font, sizes.author);
+  const lineHeight = titleMetrics.lineHeight;
   const titleBlockHeight = lineHeight * lines.length;
   const titleTop = Math.round((params.height - titleBlockHeight) / 2);
-  const fontFamily = '"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif';
 
-  const titleWidth = sizes.longestChars * sizes.title;
-  const titleRight = Math.round(params.width / 2 + titleWidth / 2);
-  const authorY = titleTop + titleBlockHeight + sizes.author + Math.round(sizes.author * 0.4);
+  const titlePaths = lines.map((line, index) => buildTitlePath(
+    font,
+    line,
+    index,
+    params.width,
+    titleTop,
+    lineHeight,
+    titleMetrics.ascender,
+    sizes.title
+  ));
 
-  const titleText = lines
-    .map((line, index) => {
-      const y = titleTop + sizes.title + index * lineHeight;
-      return `<text x="50%" y="${y}" text-anchor="middle" font-size="${sizes.title}" font-family="${escapeAttribute(fontFamily)}" fill="rgba(0,0,0,0.72)">${escapeXml(line)}</text>`;
-    })
-    .join('');
+  const titleRight = titlePaths.length > 0
+    ? Math.max(...titlePaths.map((item) => item.right))
+    : params.width / 2;
 
-  const authorText = params.author.trim()
-    ? `<text x="${titleRight}" y="${authorY}" text-anchor="end" font-size="${sizes.author}" font-family="${escapeAttribute(fontFamily)}" fill="rgba(0,0,0,0.72)">${escapeXml(params.author.trim())}</text>`
+  const authorText = params.author.trim();
+  const authorPath = authorText
+    ? buildAuthorPath(
+        font,
+        authorText,
+        sizes.author,
+        titleRight,
+        titleTop + titleBlockHeight + Math.round(sizes.author * 0.4) + authorMetrics.ascender
+      )
     : '';
 
   const svg = `
     <svg width="${params.width}" height="${params.height}" viewBox="0 0 ${params.width} ${params.height}" xmlns="http://www.w3.org/2000/svg">
-      ${titleText}
-      ${authorText}
+      ${titlePaths.map((item) => item.path).join('')}
+      ${authorPath}
     </svg>`;
 
   return Buffer.from(svg);
@@ -173,28 +280,32 @@ export async function createCover(options: CoverOptions): Promise<string> {
   const background = backgroundPath
     ? sharp(backgroundPath).resize(width, height, { fit: 'cover' })
     : sharp(buildGradientBackground(width, height));
+  const textSvg = buildTextSvg({
+    title: options.title,
+    author,
+    width,
+    height
+  });
+
+  const overlays: OverlayOptions[] = [
+    {
+      input: {
+        create: {
+          width,
+          height,
+          channels: 4 as const,
+          background: { r: 255, g: 255, b: 255, alpha: 0.58 }
+        }
+      }
+    }
+  ];
+
+  if (textSvg) {
+    overlays.push({ input: textSvg });
+  }
 
   await background
-    .composite([
-      {
-        input: {
-          create: {
-            width,
-            height,
-            channels: 4,
-            background: { r: 255, g: 255, b: 255, alpha: 0.58 }
-          }
-        }
-      },
-      {
-        input: buildTextSvg({
-          title: options.title,
-          author,
-          width,
-          height
-        })
-      }
-    ])
+    .composite(overlays)
     .jpeg({ quality: 92 })
     .toFile(outputPath);
 
