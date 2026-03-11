@@ -6,7 +6,7 @@ import { extractPublishableContent, readHtmlMetadata } from '../core/converter';
 import { WechatClient } from '../core/wechat';
 import { loadConfig } from '../utils/config';
 import { readTextFile } from '../utils/fs';
-import { error, success } from '../utils/logger';
+import { success } from '../utils/logger';
 
 interface PublishOptions {
   article: string;
@@ -20,7 +20,7 @@ interface PublishOptions {
 export async function publishDraft(articlePath: string, coverPath: string, options?: { title?: string; author?: string; digest?: string; enableComment?: boolean }): Promise<Record<string, any>> {
   const config = await loadConfig();
   if (!config.appid || !config.appsecret) {
-    error('未配置微信认证信息，请先运行: wxgzh config --appid xxx --appsecret yyy');
+    throw new Error('未配置微信认证信息，请先运行: wxgzh config --appid xxx --appsecret yyy');
   }
 
   const html = await readTextFile(path.resolve(articlePath));
