@@ -40,7 +40,7 @@ npm install -g @lyhue1991/wxgzh
 * step2: 一键配置 (提前准备好微信公众号AppID和 AppSecret ， 并配置好IP白名单)
 
 ```bash
-wxgzh config --appid 你的AppID --appsecret 你的AppSecret 
+wxgzh config --account 公众号名称1 --appid 你的AppID --appsecret 你的AppSecret 
 
 ```
 
@@ -67,24 +67,93 @@ wxgzh article.md --author 文章作者姓名
 前往微信公众号公众平台，使用已认证的公众号管理员账号登录：
 
 1. 打开公众号后台
-2. 进入“设置与开发”
-3. 找到“开发接口管理”
+2. 进入"设置与开发"
+3. 找到"开发接口管理"
 4. 查看并复制 `AppID` 和 `AppSecret`
 
-拿到后，执行：
+拿到后，执行（**必须同时指定公众号账号名**）：
 
 ```bash
-wxgzh config --appid 你的AppID --appsecret 你的AppSecret
+wxgzh config --account 公众号名称1 --appid 你的AppID --appsecret 你的AppSecret
 ```
 
 也可以同时设置默认作者、默认主题：
 
 ```bash
-wxgzh config --appid 你的AppID --appsecret 你的AppSecret --author "wxgzh" --default-theme blue
+wxgzh config --account 公众号名称1 --appid 你的AppID --appsecret 你的AppSecret --author "wxgzh" --default-theme blue
 ```
 
+### 2. 如何管理多个公众号账号
 
-### 2. 如何把本机IP加入公众号 IP 白名单
+`wxgzh` 支持同时管理多个公众号账号，适合有多个公众号或需要在不同账号间切换的场景。
+
+**添加多个账号：**
+
+```bash
+# 主账号
+wxgzh config --account 公众号名称1 --appid 你的AppID --appsecret 你的AppSecret
+
+# 备用账号
+wxgzh config --account 公众号名称2 --appid 另一个AppID --appsecret 另一个AppSecret
+```
+
+**设置默认账号：**
+
+```bash
+wxgzh config --set-default-account 公众号名称1
+```
+
+**查看已配置的账号：**
+
+```bash
+wxgzh config --list-accounts
+```
+
+**发布时指定账号：**
+
+```bash
+# 使用公众号名称1发布
+wxgzh article.md --account 公众号名称1
+
+# 使用公众号名称2发布
+wxgzh article.md --account 公众号名称2
+
+# 不指定则使用默认账号
+wxgzh article.md
+```
+
+**账号选择优先级：**
+
+命令行 `--account` > front matter 中的 `account` 字段 > 环境变量 `WX_ACCOUNT` > 用户配置的默认账号
+
+**使用 front matter 指定账号：**
+
+```yaml
+---
+title: 我的文章
+author: wxgzh
+account: 公众号名称2
+---
+
+# 文章正文
+```
+
+**使用环境变量（适用于 CI/CD 场景）：**
+
+```bash
+export WX_ACCOUNT=公众号名称2
+export WX_APPID=你的AppID
+export WX_APPSECRET=你的AppSecret
+wxgzh article.md
+```
+
+**删除账号配置：**
+
+```bash
+wxgzh config --remove-account 公众号名称2
+```
+
+### 3. 如何把本机IP加入公众号 IP 白名单
 
 > [!IMPORTANT]
 > 调用微信公众号接口前，除了配置 `appid` 和 `appsecret`，还要把当前机器的公网 IP 加到公众号后台的 IP 白名单。
@@ -100,7 +169,7 @@ wxgzh config --appid 你的AppID --appsecret 你的AppSecret --author "wxgzh" --
 查看本机公网 IP 的方法：浏览器访问 https://ip.sb/ 查看 Address
 
 
-### 3. 如何查看当前配置
+### 4. 如何查看当前配置
 
 ```bash
 wxgzh config --list
@@ -391,6 +460,7 @@ enableComment: true
 - `author`：作者
 - `digest`：摘要
 - `theme`：主题名
+- `account`：目标公众号账号名
 - `cover`：封面图路径
 - `enableComment`：是否开启评论
 
@@ -424,4 +494,3 @@ wxgzh fix .wxgzh/article.html --no-upload
 wxgzh cover --title "我的文章" --to .wxgzh/cover.jpg
 wxgzh publish --article .wxgzh/article.html --cover .wxgzh/cover.jpg
 ```
-

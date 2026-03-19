@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 import { createCover } from '../core/cover';
 import { parseMarkdown } from '../core/parser';
 import { assertThemeExists, listAvailableThemes } from '../core/themes';
-import { loadConfig } from '../utils/config';
+import { loadConfig, resolveWechatCredentials } from '../utils/config';
 import { ensureParentDir } from '../utils/fs';
 import { info } from '../utils/logger';
 import { registerConfigCommand } from './config';
@@ -22,6 +22,7 @@ dotenv.config();
 const EXAMPLES_TEXT = [
   '常用示例:',
   '  $ wxgzh article.md',
+  '  $ wxgzh article.md --account 公众号名称1',
   '  $ wxgzh article.md --theme blue',
   '  $ wxgzh article.md --author "wxgzh" --digest "这是一篇摘要"',
   '  $ wxgzh article.md --cover ./cover.jpg',
@@ -47,6 +48,7 @@ function getCliVersion(): string {
 interface RootOptions {
   theme?: string;
   author?: string;
+  account?: string;
   cover?: string | boolean;
   digest?: string;
   outputDir?: string;
@@ -63,10 +65,10 @@ async function runDefaultPipeline(articlePath: string, options: RootOptions): Pr
   const articleBaseName = path.basename(absoluteArticle, path.extname(absoluteArticle));
   const htmlPath = path.join(outputDir, `${articleBaseName}.html`);
   const coverPath = path.join(outputDir, `${articleBaseName}.cover.jpg`);
-  const config = await loadConfig();
 
   const rawMarkdown = await readFile(absoluteArticle, 'utf8');
   const parsed = parseMarkdown(rawMarkdown);
+  const config = await loadConfig({ account: options.account ?? parsed.metadata.account });
   const title = parsed.metadata.title ?? articleBaseName;
   const author = options.author ?? parsed.metadata.author ?? config.author ?? 'wxgzh';
   const digest = options.digest ?? parsed.metadata.digest ?? '由 wxgzh 自动生成的公众号草稿';
@@ -74,6 +76,7 @@ async function runDefaultPipeline(articlePath: string, options: RootOptions): Pr
   const resolvedTheme = options.theme ?? parsed.metadata.theme ?? config.defaultTheme;
 
   await convertMarkdownFile(absoluteArticle, htmlPath, {
+    account: config.account,
     theme: resolvedTheme ? assertThemeExists(resolvedTheme) : undefined,
     author
   });
@@ -82,11 +85,7 @@ async function runDefaultPipeline(articlePath: string, options: RootOptions): Pr
   const { fixHtmlFile } = await import('../core/fixer');
   const { WechatClient } = await import('../core/wechat');
 
-  if (!config.appid || !config.appsecret) {
-    throw new Error('未配置微信认证信息，请先运行: wxgzh config --appid xxx --appsecret yyy');
-  }
-
-  const wechat = new WechatClient({ appid: config.appid, appsecret: config.appsecret });
+  const wechat = new WechatClient(resolveWechatCredentials(config));
   await fixHtmlFile(htmlPath, { upload: true, wechat });
   info(`已修复并上传正文图片: ${htmlPath}`);
 
@@ -107,6 +106,7 @@ async function runDefaultPipeline(articlePath: string, options: RootOptions): Pr
   }
 
   const result = await publishDraft(htmlPath, finalCoverPath, {
+    account: config.account,
     title,
     author,
     digest,
@@ -129,6 +129,7 @@ async function main(): Promise<void> {
     .argument('[article]', 'Markdown 文件路径；传入后会自动执行 md2html -> fix -> cover -> publish')
     .option('--theme <theme>', `指定主题名，可用值：${listAvailableThemes().join(', ')}`)
     .option('--author <author>', '覆盖作者名；未传时优先使用 front matter 或 config 中的 author')
+    .option('--account <name>', '指定本次发布使用的公众号账号')
     .option('--cover <cover.jpg>', '指定现成封面图；未传时默认自动生成')
     .option('--no-cover', '禁用自动封面生成；适合 front matter 已配置 cover 的场景')
     .option('--digest <digest>', '覆盖文章摘要；未传时自动从正文提取')
