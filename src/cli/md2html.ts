@@ -17,14 +17,15 @@ interface Md2HtmlOptions {
   author?: string;
 }
 
-export async function convertMarkdownFile(inputPath: string, outputPath: string, options?: { theme?: string; author?: string }): Promise<void> {
-  const config = await loadConfig();
+export async function convertMarkdownFile(inputPath: string, outputPath: string, options?: { theme?: string; author?: string; account?: string }): Promise<void> {
   const absoluteInputPath = path.resolve(inputPath);
   const raw = await readFile(absoluteInputPath, 'utf8');
   const parsed = parseMarkdown(raw);
+  const config = await loadConfig({ account: options?.account ?? parsed.metadata.account });
   const resolvedTheme = options?.theme ?? parsed.metadata.theme ?? config.defaultTheme ?? 'default';
   const html = await renderMarkdownToHtml(parsed.body, {
     ...parsed.metadata,
+    account: options?.account ?? parsed.metadata.account ?? config.account,
     theme: assertThemeExists(resolvedTheme),
     author: options?.author ?? parsed.metadata.author ?? config.author,
     sourceDir: path.dirname(absoluteInputPath)

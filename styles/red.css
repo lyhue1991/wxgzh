@@ -1,3 +1,4 @@
+/* 与 blue 主题保持一致，仅二级标题主题色不同 */
 ::marker {
     font-size: 14px;
 }
@@ -528,7 +529,6 @@ input {
 	background: #777;
 	color: white;
 }
-
 
 /**
     代码高亮

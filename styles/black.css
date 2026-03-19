@@ -1,3 +1,4 @@
+/* 与 blue 主题保持一致，仅二级标题主题色不同 */
 ::marker {
     font-size: 14px;
 }
@@ -62,27 +63,33 @@ h6 {
 	font-weight: bold;
 	margin-bottom: 1.5em;
 }
-
-
 h1 {
 	font-size: 30px;
-	/*30 / 16*/
 	line-height: 1.6em;
-	/* 48 / 30*/
 	margin-top: 2em;
 }
 
-h2 {
-  font-size: 25px;
-  padding: 10px 10px 10px 10px; /* 上、右、下、左的内边距分别为10px、20px、15px、25px */  
-  margin-top: 0.85em;
-  margin-bottom: 0.85em;
-  background-color: #000;
-  overflow: hidden;
-  color:#fff;
-  box-sizing: border-box;
+h2{
+	font-size: 25px;
+    padding: 10px 10px 10px 10px;
+	line-height: 1.15;
+	margin-top: 1.85em;
+	margin-bottom: 1.15em;
+    background:#000;
+    color:#fff;
 }
 
+h3 {
+	font-size: 20px;
+	line-height: 1.15;
+	margin-top: 2.285714em;
+	margin-bottom: 1.15em;
+}
+
+h4 {
+	font-size: 16px;
+	margin-top: 2.67em;
+}
 
 pre {
 	line-height: 1.4em;
@@ -120,7 +127,6 @@ a:hover,
 a:active {
 	text-decoration: underline;
 }
-/* block spacing */
 
 p {
 	margin: 1.2em 3%;
@@ -137,16 +143,13 @@ blockquote, q {
   margin: auto 3%;
 }
 
-/* tables */
 .md-meta,.md-before, .md-after {
 	color:#999;
 }
 
 table {
 	margin-bottom: 1.5em;
-	/*24 / 16*/
 	font-size: 1em;
-	/* width: 100%; */
 }
 thead th,
 tfoot th {
@@ -164,10 +167,6 @@ td {
 .md-fences {
     color: #0079bb;
 }
-
-
-
-
 
 tt {
 	font-size: .875em;
@@ -218,7 +217,6 @@ h1 {
 	border-color: #c5c5c5;
 }
 blockquote {
-
 	border-color: #bababa;
 }
 
@@ -363,8 +361,6 @@ hr {
 	list-style-type: none;
 }
 
-/** UI for electron */
-
 .megamenu-menu,
 #top-titlebar, #top-titlebar *,
 .megamenu-content {
@@ -476,7 +472,7 @@ input {
 }
 
 .megamenu-menu-header #megamenu-menu-header-title,
-.megamenu-menu-header:hover, 
+.megamenu-menu-header:hover,
 .megamenu-menu-header:focus {
 	color: inherit;
 }
@@ -486,7 +482,6 @@ input {
 	opacity: 1;
 }
 
-/* https://github.com/typora/typora-issues/issues/2046 */
 .os-windows-7 strong,
 .os-windows-7 strong  {
 }
@@ -509,76 +504,68 @@ input {
 	color: white;
 }
 
-
-
-/**
-    代码高亮
- */
-
 .highlight .hll { background-color: #ffffcc }
-.highlight .c { color: #60a0b0; font-style: italic } /* Comment */
-.highlight .err { border: 1px solid #FF0000 } /* Error */
-.highlight .k { color: #007020; font-weight: bold } /* Keyword */
-.highlight .o { color: #666666 } /* Operator */
-.highlight .cm { color: #60a0b0; font-style: italic } /* Comment.Multiline */
-.highlight .cp { color: #007020 } /* Comment.Preproc */
-.highlight .c1 { color: #60a0b0; font-style: italic } /* Comment.Single */
-.highlight .cs { color: #60a0b0; background-color: #fff0f0 } /* Comment.Special */
-.highlight .gd { color: #A00000 } /* Generic.Deleted */
-.highlight .ge { font-style: italic } /* Generic.Emph */
-.highlight .gr { color: #FF0000 } /* Generic.Error */
-.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
-.highlight .gi { color: #00A000 } /* Generic.Inserted */
-.highlight .go { color: #808080 } /* Generic.Output */
-.highlight .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
-.highlight .gs { font-weight: bold } /* Generic.Strong */
-.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
-.highlight .gt { color: #0040D0 } /* Generic.Traceback */
-.highlight .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
-.highlight .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
-.highlight .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
-.highlight .kp { color: #007020 } /* Keyword.Pseudo */
-.highlight .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
-.highlight .kt { color: #902000 } /* Keyword.Type */
-.highlight .m { color: #40a070 } /* Literal.Number */
-.highlight .s { color: #4070a0 } /* Literal.String */
-.highlight .na { color: #4070a0 } /* Name.Attribute */
-.highlight .nb { color: #007020 } /* Name.Builtin */
-.highlight .nc { color: #0e84b5; font-weight: bold } /* Name.Class */
-.highlight .no { color: #60add5 } /* Name.Constant */
-.highlight .nd { color: #555555; font-weight: bold } /* Name.Decorator */
-.highlight .ni { color: #d55537; font-weight: bold } /* Name.Entity */
-.highlight .ne { color: #007020 } /* Name.Exception */
-.highlight .nf { color: #06287e } /* Name.Function */
-.highlight .nl { color: #002070; font-weight: bold } /* Name.Label */
-.highlight .nn { color: #0e84b5; font-weight: bold } /* Name.Namespace */
-.highlight .nt { color: #062873; font-weight: bold } /* Name.Tag */
-.highlight .nv { color: #bb60d5 } /* Name.Variable */
-.highlight .ow { color: #007020; font-weight: bold } /* Operator.Word */
-.highlight .w { color: #bbbbbb } /* Text.Whitespace */
-.highlight .mf { color: #40a070 } /* Literal.Number.Float */
-.highlight .mh { color: #40a070 } /* Literal.Number.Hex */
-.highlight .mi { color: #40a070 } /* Literal.Number.Integer */
-.highlight .mo { color: #40a070 } /* Literal.Number.Oct */
-.highlight .sb { color: #4070a0 } /* Literal.String.Backtick */
-.highlight .sc { color: #4070a0 } /* Literal.String.Char */
-.highlight .sd { color: #4070a0; font-style: italic } /* Literal.String.Doc */
-.highlight .s2 { color: #4070a0 } /* Literal.String.Double */
-.highlight .se { color: #4070a0; font-weight: bold } /* Literal.String.Escape */
-.highlight .sh { color: #4070a0 } /* Literal.String.Heredoc */
-.highlight .si { color: #70a0d0; font-style: italic } /* Literal.String.Interpol */
-.highlight .sx { color: #c65d09 } /* Literal.String.Other */
-.highlight .sr { color: #235388 } /* Literal.String.Regex */
-.highlight .s1 { color: #4070a0 } /* Literal.String.Single */
-.highlight .ss { color: #517918 } /* Literal.String.Symbol */
-.highlight .bp { color: #007020 } /* Name.Builtin.Pseudo */
-.highlight .vc { color: #bb60d5 } /* Name.Variable.Class */
-.highlight .vg { color: #bb60d5 } /* Name.Variable.Global */
-.highlight .vi { color: #bb60d5 } /* Name.Variable.Instance */
-.highlight .il { color: #40a070 } /* Literal.Number.Integer.Long */
+.highlight .c { color: #60a0b0; font-style: italic }
+.highlight .err { border: 1px solid #FF0000 }
+.highlight .k { color: #007020; font-weight: bold }
+.highlight .o { color: #666666 }
+.highlight .cm { color: #60a0b0; font-style: italic }
+.highlight .cp { color: #007020 }
+.highlight .c1 { color: #60a0b0; font-style: italic }
+.highlight .cs { color: #60a0b0; background-color: #fff0f0 }
+.highlight .gd { color: #A00000 }
+.highlight .ge { font-style: italic }
+.highlight .gr { color: #FF0000 }
+.highlight .gh { color: #000080; font-weight: bold }
+.highlight .gi { color: #00A000 }
+.highlight .go { color: #808080 }
+.highlight .gp { color: #c65d09; font-weight: bold }
+.highlight .gs { font-weight: bold }
+.highlight .gu { color: #800080; font-weight: bold }
+.highlight .gt { color: #0040D0 }
+.highlight .kc { color: #007020; font-weight: bold }
+.highlight .kd { color: #007020; font-weight: bold }
+.highlight .kn { color: #007020; font-weight: bold }
+.highlight .kp { color: #007020 }
+.highlight .kr { color: #007020; font-weight: bold }
+.highlight .kt { color: #902000 }
+.highlight .m { color: #40a070 }
+.highlight .s { color: #4070a0 }
+.highlight .na { color: #4070a0 }
+.highlight .nb { color: #007020 }
+.highlight .nc { color: #0e84b5; font-weight: bold }
+.highlight .no { color: #60add5 }
+.highlight .nd { color: #555555; font-weight: bold }
+.highlight .ni { color: #d55537; font-weight: bold }
+.highlight .ne { color: #007020 }
+.highlight .nf { color: #06287e }
+.highlight .nl { color: #002070; font-weight: bold }
+.highlight .nn { color: #0e84b5; font-weight: bold }
+.highlight .nt { color: #062873; font-weight: bold }
+.highlight .nv { color: #bb60d5 }
+.highlight .ow { color: #007020; font-weight: bold }
+.highlight .w { color: #bbbbbb }
+.highlight .mf { color: #40a070 }
+.highlight .mh { color: #40a070 }
+.highlight .mi { color: #40a070 }
+.highlight .mo { color: #40a070 }
+.highlight .sb { color: #4070a0 }
+.highlight .sc { color: #4070a0 }
+.highlight .sd { color: #4070a0; font-style: italic }
+.highlight .s2 { color: #4070a0 }
+.highlight .se { color: #4070a0; font-weight: bold }
+.highlight .sh { color: #4070a0 }
+.highlight .si { color: #70a0d0; font-style: italic }
+.highlight .sx { color: #c65d09 }
+.highlight .sr { color: #235388 }
+.highlight .s1 { color: #4070a0 }
+.highlight .ss { color: #517918 }
+.highlight .bp { color: #007020 }
+.highlight .vc { color: #bb60d5 }
+.highlight .vg { color: #bb60d5 }
+.highlight .vi { color: #bb60d5 }
+.highlight .il { color: #40a070 }
 
-
-/*大纲紧凑*/
 .outline-item {
     padding-top: 0px;
     padding-bottom: 0px;
@@ -595,6 +582,3 @@ input {
 li.md-list-item {
     line-height: 120%;
 }
-
-
-

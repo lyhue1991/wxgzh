@@ -13,6 +13,7 @@
 
 哈哈
 ![](./assets/backgrounds/心心相印.jpg)
+![](./assets/backgrounds/风车.jpg)
 
 
 ## 小标题2 

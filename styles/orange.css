@@ -1,3 +1,4 @@
+/* 与 blue 主题保持一致，仅二级标题主题色不同 */
 ::marker {
     font-size: 14px;
 }
@@ -529,8 +530,6 @@ input {
 	color: white;
 }
 
-
-
 /**
     代码高亮
  */
@@ -596,6 +595,7 @@ input {
 .highlight .vg { color: #bb60d5 } /* Name.Variable.Global */
 .highlight .vi { color: #bb60d5 } /* Name.Variable.Instance */
 .highlight .il { color: #40a070 } /* Literal.Number.Integer.Long */
+
 
 
 /*大纲紧凑*/

@@ -100,6 +100,10 @@ function normalizeMetadata(data: Record<string, unknown>): ArticleMetadata {
     metadata.theme = data.theme.trim();
   }
 
+  if (typeof data.account === 'string' && data.account.trim()) {
+    metadata.account = data.account.trim();
+  }
+
   if (typeof data.cover === 'string' && data.cover.trim()) {
     metadata.cover = data.cover.trim();
   }
