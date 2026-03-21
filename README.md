@@ -6,7 +6,13 @@
 
 <mark>安装此SKILL</mark>
 
+```bash
+#for openclaw
+npx clawhub@latest install wxgzh
 ```
+
+```bash
+#for opencode/claudecode/cursor/openclaw/... 
 npx skills add lyhue1991/wxgzh
 ```
 
