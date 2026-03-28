@@ -486,14 +486,38 @@ function normalizeListItems($: cheerio.CheerioAPI): void {
 
     const firstChild = childElements[0];
     if (!hasBlockChild && isTagNode(firstChild, 'span') && childElements.length === 1) {
+      $(firstChild).attr('data-wxgzh', 'li-inline');
       return;
     }
 
     if (hasBlockChild) {
+      const inlineNodes: AnyNode[] = [];
+
+      for (const node of childElements) {
+        if (node.type === 'tag') {
+          const tagName = node.tagName.toLowerCase();
+          if (['p', 'ul', 'ol', 'section', 'blockquote', 'pre', 'table'].includes(tagName)) {
+            break;
+          }
+        }
+
+        inlineNodes.push(node);
+      }
+
+      if (inlineNodes.length > 0) {
+        const inlineHtml = inlineNodes.map((node) => $.html(node)).join('');
+
+        for (const node of inlineNodes) {
+          $(node).remove();
+        }
+
+        $item.prepend(`<span data-wxgzh="li-inline">${inlineHtml}</span>`);
+      }
+
       return;
     }
 
-    $item.html(`<span>${$item.html() ?? ''}</span>`);
+    $item.html(`<span data-wxgzh="li-inline">${$item.html() ?? ''}</span>`);
   });
 }
 
@@ -763,6 +787,46 @@ function normalizeInlinedListStyles($: cheerio.CheerioAPI): void {
   });
 }
 
+function decorateUnorderedListMarkers($: cheerio.CheerioAPI): void {
+  $('ul').each((_, element) => {
+    const $list = $(element);
+    const depth = $list.parents('ul').length;
+    const paddingLeft = depth === 0 ? '0 !important' : '1.2em !important';
+
+    $list.attr('style', setInlineStyleProperty($list.attr('style'), 'list-style', 'none !important'));
+    $list.attr('style', setInlineStyleProperty($list.attr('style'), 'margin-left', '0 !important'));
+    $list.attr('style', setInlineStyleProperty($list.attr('style'), 'padding-left', paddingLeft));
+  });
+
+  $('ul > li').each((_, element) => {
+    const $item = $(element);
+    const hasCheckbox = $item.children('input[type="checkbox"]').length > 0;
+
+    if (hasCheckbox) {
+      return;
+    }
+
+    $item.children('span[data-wxgzh="ul-marker"]').remove();
+    $item.attr('style', setInlineStyleProperty($item.attr('style'), 'list-style', 'none !important'));
+    $item.attr('style', setInlineStyleProperty($item.attr('style'), 'margin-left', '0 !important'));
+
+    const $content = $item.children('span[data-wxgzh="li-inline"]').first();
+    if ($content.length === 0) {
+      return;
+    }
+
+    $content.children('span[data-wxgzh="ul-marker"]').remove();
+    $content.prepend('<span data-wxgzh="ul-marker">●&nbsp;</span>');
+
+    const $marker = $content.children('span[data-wxgzh="ul-marker"]').first();
+    $marker.attr('style', setInlineStyleProperty($marker.attr('style'), 'display', 'inline !important'));
+    $marker.attr('style', setInlineStyleProperty($marker.attr('style'), 'line-height', 'inherit !important'));
+    $marker.attr('style', setInlineStyleProperty($marker.attr('style'), 'font-size', '1.1em !important'));
+    $marker.attr('style', setInlineStyleProperty($marker.attr('style'), 'font-weight', '700 !important'));
+    $marker.attr('style', setInlineStyleProperty($marker.attr('style'), 'color', '#000000 !important'));
+  });
+}
+
 function removeWechatUnsafeListWhitespace($: cheerio.CheerioAPI): void {
   $('ol, ul').each((_, element) => {
     $(element)
@@ -886,6 +950,7 @@ function cleanInlinedHtml(html: string): string {
   });
 
   normalizeInlinedListStyles($);
+  decorateUnorderedListMarkers($);
   removeWechatUnsafeListWhitespace($);
   normalizeWechatCodeBlocks($);
 
