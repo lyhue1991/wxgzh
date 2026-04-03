@@ -1,7 +1,7 @@
 import { readdirSync } from 'node:fs';
 import path from 'node:path';
 
-const DEFAULT_THEME = 'default';
+const DEFAULT_THEME = 'black';
 
 function getStylesDir(): string {
   return path.resolve(__dirname, '../../styles');

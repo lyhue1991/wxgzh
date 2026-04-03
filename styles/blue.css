@@ -71,20 +71,26 @@ h1 {
 }
 
 h2{
-	font-size: 25px;
-    padding: 10px 10px 10px 10px; /* 上、右、下、左的内边距分别为10px、20px、15px、25px */  
-	line-height: 1.15;
+	display: block;
+	width: 100%;
+	font-size: 18px;
+	font-weight: 800;
+	padding: 8px 14px;
+	line-height: 1.4;
 	/*24 / 21*/
 	margin-top: 1.85em;
 	/*48 / 21*/
 	margin-bottom: 1.15em;
 	/*24 / 21*/
-    background:#2891DB;
-    color:#fff;
+	margin-left: 0;
+	border-bottom: none;
+	box-sizing: border-box;
+	background:#2891DB;
+	color:#fff;
 }
 
 h3 {
-	font-size: 20px;
+	font-size: 16px;
 	/*21 / 16*/
 	line-height: 1.15;
 	/*24 / 21*/
