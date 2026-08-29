@@ -10,7 +10,7 @@ import { parseMarkdown } from '../core/parser';
 import { assertThemeExists, listAvailableThemes } from '../core/themes';
 import { loadConfig, resolveWechatCredentials } from '../utils/config';
 import { ensureParentDir } from '../utils/fs';
-import { info } from '../utils/logger';
+import { info, warn } from '../utils/logger';
 import { registerConfigCommand } from './config';
 import { registerCoverCommand } from './cover';
 import { registerFixCommand } from './fix';
@@ -86,8 +86,11 @@ async function runDefaultPipeline(articlePath: string, options: RootOptions): Pr
   const { WechatClient } = await import('../core/wechat');
 
   const wechat = new WechatClient(resolveWechatCredentials(config));
-  await fixHtmlFile(htmlPath, { upload: true, wechat });
+  const fixResult = await fixHtmlFile(htmlPath, { upload: true, wechat });
   info(`已修复并上传正文图片: ${htmlPath}`);
+  for (const message of fixResult.skippedImages) {
+    warn(message);
+  }
 
   let finalCoverPath = resolveCoverValue(options.cover) ?? parsed.metadata.cover;
   if (finalCoverPath && !path.isAbsolute(finalCoverPath)) {
@@ -118,6 +121,10 @@ async function runDefaultPipeline(articlePath: string, options: RootOptions): Pr
 
 async function main(): Promise<void> {
   const program = new Command();
+
+  // 外层命令与子命令存在同名选项（如 publish 的 --cover），必须启用 positional options：
+  // 子命令名之后出现的选项只归子命令所有，避免外层 --cover/--no-cover 吞掉 publish 的 --cover 参数
+  program.enablePositionalOptions();
 
   program
     .name('wxgzh')

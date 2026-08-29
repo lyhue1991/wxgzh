@@ -7,7 +7,7 @@ import { fixHtmlFile } from '../core/fixer';
 import { WechatClient } from '../core/wechat';
 import { loadConfig, resolveWechatCredentials } from '../utils/config';
 import { readTextFile } from '../utils/fs';
-import { success } from '../utils/logger';
+import { success, warn } from '../utils/logger';
 
 interface FixOptions {
   account?: string;
@@ -47,5 +47,8 @@ export function registerFixCommand(program: Command): void {
       });
 
       success(`HTML 修复完成，共处理 ${result.imageCount} 张图片`);
+      for (const message of result.skippedImages) {
+        warn(message);
+      }
     });
 }
