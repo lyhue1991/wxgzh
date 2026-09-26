@@ -105,14 +105,19 @@ wxgzh fix .wxgzh/article.html --no-upload
 
 ### 全局参数
 - `--author <name>` - 作者名
-- `--theme <theme>` - 主题样式（default/blue/green/red/yellow/brown/black/orange）
+- `--theme <theme>` - 主题样式（black/blue/brown/default/red）
 - `--account <name>` - 指定公众号账号
+- `--cover <cover.jpg>` - 指定现成封面图；未传时默认自动生成
+- `--no-cover` - 禁用自动封面生成；适合 front matter 已配置 cover 的场景
+- `--digest <text>` - 覆盖文章摘要；未传时自动从正文提取
 - `--output-dir <dir>` - 中间产物输出目录
 
 ### publish 命令
 - `--article <file>` - HTML 正文路径（必填）
 - `--cover <file>` - 封面图路径（必填）
+- `--account <name>` - 指定本次发布使用的公众号账号
 - `--title <title>` - 覆盖标题
+- `--author <name>` - 覆盖作者名
 - `--digest <text>` - 文章摘要
 - `--enable-comment` - 开启评论
 
