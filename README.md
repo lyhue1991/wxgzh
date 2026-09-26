@@ -195,7 +195,7 @@ wxgzh config --list
 wxgzh config --list-themes
 ```
 
-当前内置主题来自 `styles/` 目录，例如：`default`、`blue`、`green`、`red`、`yellow`、`brown`、`black`、`orange`。
+当前内置主题来自 `styles/` 目录：`default`、`blue`、`brown`、`black`（默认）。
 
 
 ## 三、快速流程

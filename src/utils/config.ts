@@ -2,7 +2,7 @@ import { access, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
-import { assertThemeExists } from '../core/themes';
+import { isValidTheme } from '../core/themes';
 import type { WxgzhAccountConfig, WxgzhConfig, WxgzhUserConfig } from '../types';
 
 const CONFIG_DIR = path.join(os.homedir(), '.config', 'wxgzh');
@@ -55,7 +55,11 @@ function sanitizeAccountConfig(input: Record<string, unknown>): WxgzhAccountConf
   }
 
   if (typeof input.defaultTheme === 'string' && input.defaultTheme.trim()) {
-    output.defaultTheme = assertThemeExists(input.defaultTheme.trim());
+    const candidateTheme = input.defaultTheme.trim();
+    // 主题可能随版本被移除：清洗时直接丢弃失效值（回落默认主题），避免读取历史配置时抛错导致 CLI 不可用
+    if (isValidTheme(candidateTheme)) {
+      output.defaultTheme = candidateTheme;
+    }
   }
 
   if (typeof input.enableComment === 'boolean') {

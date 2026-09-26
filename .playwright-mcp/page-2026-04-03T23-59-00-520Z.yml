@@ -1,0 +1,572 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - list [ref=e5]:
+        - listitem [ref=e6]:
+          - link "首页" [ref=e7] [cursor=pointer]:
+            - /url: //www.bilibili.com
+            - img [ref=e8]
+            - generic [ref=e10]: 首页
+        - listitem [ref=e11]:
+          - link "番剧" [ref=e12] [cursor=pointer]:
+            - /url: //www.bilibili.com/anime/
+        - listitem [ref=e13]:
+          - link "直播" [ref=e14] [cursor=pointer]:
+            - /url: //live.bilibili.com
+        - listitem [ref=e15]:
+          - link "游戏中心" [ref=e16] [cursor=pointer]:
+            - /url: //game.bilibili.com/platform
+        - listitem [ref=e17]:
+          - link "会员购" [ref=e18] [cursor=pointer]:
+            - /url: //show.bilibili.com/platform/home.html?msource=pc_web
+        - listitem [ref=e19]:
+          - link "漫画" [ref=e20] [cursor=pointer]:
+            - /url: //manga.bilibili.com?from=bill_top_mnav
+        - listitem [ref=e21]:
+          - link "赛事" [ref=e22] [cursor=pointer]:
+            - /url: //www.bilibili.com/match/home/
+        - listitem [ref=e23]:
+          - link "做游戏 图片 做游戏" [ref=e25] [cursor=pointer]:
+            - /url: https://www.bilibili.com/blackboard/era/wozaibilibilizuoyouxi.html
+            - generic [ref=e26]:
+              - paragraph [ref=e27]: 做游戏
+              - paragraph [ref=e28]:
+                - img "图片" [ref=e29]
+              - paragraph [ref=e30]: 做游戏
+        - listitem [ref=e31]:
+          - link "下载客户端" [ref=e32] [cursor=pointer]:
+            - /url: //app.bilibili.com
+            - img [ref=e33]
+            - generic [ref=e36]: 下载客户端
+      - generic [ref=e40]:
+        - textbox "ZMJJKK" [ref=e42]
+        - img [ref=e44] [cursor=pointer]
+      - list [ref=e46]:
+        - listitem [ref=e47] [cursor=pointer]:
+          - listitem [ref=e48]:
+            - generic [ref=e50]: 登录
+            - generic [ref=e53]:
+              - paragraph [ref=e54]: 登录后你可以：
+              - generic [ref=e55]:
+                - generic [ref=e56]:
+                  - img [ref=e57]
+                  - generic [ref=e61]: 免费看高清视频
+                - generic [ref=e62]:
+                  - img [ref=e63]
+                  - generic [ref=e66]: 多端同步播放记录
+                - generic [ref=e67]:
+                  - img [ref=e68]
+                  - generic [ref=e74]: 发表弹幕/评论
+                - generic [ref=e75]:
+                  - img [ref=e76]
+                  - generic [ref=e79]: 热门番剧影视看不停
+              - generic [ref=e80]: 立即登录
+              - generic [ref=e81]: 首次使用？ 点我注册
+        - listitem [ref=e82] [cursor=pointer]:
+          - listitem [ref=e84]:
+            - link [ref=e85]:
+              - /url: //account.bilibili.com/big
+              - img [ref=e86]
+        - listitem [ref=e90] [cursor=pointer]:
+          - img [ref=e92]
+        - listitem [ref=e95] [cursor=pointer]:
+          - img [ref=e97]
+        - listitem [ref=e103] [cursor=pointer]:
+          - img [ref=e105]
+        - listitem [ref=e108] [cursor=pointer]:
+          - img [ref=e110]
+        - listitem [ref=e112] [cursor=pointer]:
+          - img [ref=e114]
+        - listitem [ref=e118] [cursor=pointer]:
+          - listitem [ref=e119]:
+            - img [ref=e122]
+    - link "B站 b站" [ref=e129] [cursor=pointer]:
+      - /url: //www.bilibili.com
+      - img "B站 b站" [ref=e130]
+  - generic [ref=e132]:
+    - generic [ref=e133]:
+      - generic [ref=e135] [cursor=pointer]:
+        - img "icon" [ref=e136]
+        - generic [ref=e137]: 综合热门
+      - generic [ref=e139] [cursor=pointer]:
+        - img "icon" [ref=e140]
+        - generic [ref=e141]: 每周必看
+      - generic [ref=e143] [cursor=pointer]:
+        - img "icon" [ref=e144]
+        - generic [ref=e145]: 入站必刷
+      - generic [ref=e147] [cursor=pointer]:
+        - img "icon" [ref=e148]
+        - generic [ref=e149]: 排行榜
+      - generic [ref=e151] [cursor=pointer]:
+        - img "icon" [ref=e152]
+        - generic [ref=e153]: 全站音乐榜
+    - generic [ref=e154]:
+      - generic [ref=e155]:
+        - paragraph [ref=e156]: 各个领域中新奇好玩的优质内容都在这里~
+        - generic [ref=e157] [cursor=pointer]:
+          - img [ref=e158]
+          - text: 热门规则
+      - list [ref=e163]:
+        - generic [ref=e164]:
+          - link [ref=e166] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1PdXQBHEv9
+            - img [ref=e167]
+          - generic [ref=e168] [cursor=pointer]:
+            - paragraph [ref=e169]: “4月1号才是情人节，2月14号才是愚人节”
+            - generic [ref=e170]:
+              - generic [ref=e171]: 百万播放
+              - generic [ref=e172]:
+                - img [ref=e173]
+                - generic "烟季" [ref=e177]
+              - paragraph [ref=e178]:
+                - generic [ref=e179]:
+                  - img [ref=e180]
+                  - text: 399.2万
+                - generic [ref=e183]:
+                  - img [ref=e184]
+                  - text: "6069"
+        - generic [ref=e190]:
+          - link [ref=e192] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1REXCBCEHB
+            - img [ref=e193]
+          - generic [ref=e194] [cursor=pointer]:
+            - paragraph [ref=e195]: ⚡对 对 子 战 神 2⚡
+            - generic [ref=e196]:
+              - generic [ref=e197]: 百万播放
+              - generic [ref=e198]:
+                - img [ref=e199]
+                - generic "洛温阿特金森" [ref=e203]
+              - paragraph [ref=e204]:
+                - generic [ref=e205]:
+                  - img [ref=e206]
+                  - text: 513.6万
+                - generic [ref=e209]:
+                  - img [ref=e210]
+                  - text: 1.2万
+        - generic [ref=e216]:
+          - link [ref=e218] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1RYXQBKEEd
+            - img [ref=e219]
+          - generic [ref=e220] [cursor=pointer]:
+            - paragraph [ref=e221]: 李荣浩手撕单依纯！老实人真被逼急了！
+            - generic [ref=e222]:
+              - generic [ref=e223]: 百万播放
+              - generic [ref=e224]:
+                - img [ref=e225]
+                - generic "LexBurner" [ref=e229]
+              - paragraph [ref=e230]:
+                - generic [ref=e231]:
+                  - img [ref=e232]
+                  - text: 974万
+                - generic [ref=e235]:
+                  - img [ref=e236]
+                  - text: 4.8万
+        - generic [ref=e242]:
+          - link [ref=e244] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1qaXhBjE5d
+            - img [ref=e245]
+          - generic [ref=e246] [cursor=pointer]:
+            - paragraph [ref=e247]: 你们要的《爱情公寓》！！！终于来了！
+            - generic [ref=e248]:
+              - generic [ref=e249]: 百万播放
+              - generic [ref=e250]:
+                - img [ref=e251]
+                - generic "凹凸赛克" [ref=e255]
+              - paragraph [ref=e256]:
+                - generic [ref=e257]:
+                  - img [ref=e258]
+                  - text: 309.6万
+                - generic [ref=e261]:
+                  - img [ref=e262]
+                  - text: "2271"
+        - generic [ref=e268]:
+          - link [ref=e270] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV19x9JByErS
+            - img [ref=e271]
+          - generic [ref=e272] [cursor=pointer]:
+            - paragraph [ref=e273]: 【方舟小动画】Travelers 一起坐过来烤烤火吧！
+            - generic [ref=e274]:
+              - generic [ref=e275]:
+                - img [ref=e276]
+                - generic "猫猫飞鱼" [ref=e280]
+              - paragraph [ref=e281]:
+                - generic [ref=e282]:
+                  - img [ref=e283]
+                  - text: 8.6万
+                - generic [ref=e286]:
+                  - img [ref=e287]
+                  - text: "202"
+        - generic [ref=e293]:
+          - link [ref=e295] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1mg9NBbEaH
+            - img [ref=e296]
+          - generic [ref=e297] [cursor=pointer]:
+            - paragraph [ref=e298]: 高中教室黑板突然脱落，眼看就要砸到老师......第一排两男生眼疾手快，第一时间上前扶住黑板！
+            - generic [ref=e299]:
+              - generic [ref=e300]: 百万播放
+              - generic [ref=e301]:
+                - img [ref=e302]
+                - generic "人民日报" [ref=e306]
+              - paragraph [ref=e307]:
+                - generic [ref=e308]:
+                  - img [ref=e309]
+                  - text: 357.1万
+                - generic [ref=e312]:
+                  - img [ref=e313]
+                  - text: "1134"
+        - generic [ref=e319]:
+          - link [ref=e321] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1tWXjBxEUk
+            - img [ref=e322]
+          - generic [ref=e323] [cursor=pointer]:
+            - paragraph [ref=e324]: 热度谋杀案
+            - generic [ref=e325]:
+              - generic [ref=e326]: 人气飙升
+              - generic [ref=e327]:
+                - img [ref=e328]
+                - generic "柠檬不过橙子" [ref=e332]
+              - paragraph [ref=e333]:
+                - generic [ref=e334]:
+                  - img [ref=e335]
+                  - text: 7.1万
+                - generic [ref=e338]:
+                  - img [ref=e339]
+                  - text: "112"
+        - generic [ref=e345]:
+          - link [ref=e347] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1YR9pBpE2x
+            - img [ref=e348]
+          - generic [ref=e349] [cursor=pointer]:
+            - paragraph [ref=e350]: 【小毛和小翠】媳妇儿～要一个亲亲～
+            - generic [ref=e351]:
+              - generic [ref=e352]:
+                - img [ref=e353]
+                - generic "希望大家开心点点点" [ref=e357]
+              - paragraph [ref=e358]:
+                - generic [ref=e359]:
+                  - img [ref=e360]
+                  - text: 23.8万
+                - generic [ref=e363]:
+                  - img [ref=e364]
+                  - text: "76"
+        - generic [ref=e370]:
+          - link [ref=e372] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1gV9TBKEc8
+            - img [ref=e373]
+          - generic [ref=e374] [cursor=pointer]:
+            - paragraph [ref=e375]: 【五周年纪念/翻唱】《猫中毒》完整版PV/嘉然
+            - generic [ref=e376]:
+              - generic [ref=e377]: 1万分享
+              - generic [ref=e378]:
+                - img [ref=e379]
+                - generic "嘉然今天吃什么" [ref=e383]
+              - paragraph [ref=e384]:
+                - generic [ref=e385]:
+                  - img [ref=e386]
+                  - text: 30.1万
+                - generic [ref=e389]:
+                  - img [ref=e390]
+                  - text: "1712"
+        - generic [ref=e396]:
+          - link [ref=e398] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1KW9FBLEaD
+            - img [ref=e399]
+          - generic [ref=e400] [cursor=pointer]:
+            - paragraph [ref=e401]: 这一刻，老戏骨都接不住了
+            - generic [ref=e402]:
+              - generic [ref=e403]: 5万点赞
+              - generic [ref=e404]:
+                - img [ref=e405]
+                - generic "wrizedm" [ref=e409]
+              - paragraph [ref=e410]:
+                - generic [ref=e411]:
+                  - img [ref=e412]
+                  - text: 96.5万
+                - generic [ref=e415]:
+                  - img [ref=e416]
+                  - text: "671"
+        - generic [ref=e422]:
+          - link [ref=e424] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1Nn9TBhEYR
+            - img [ref=e425]
+          - generic [ref=e426] [cursor=pointer]:
+            - paragraph [ref=e427]: 带着100万，我们揭开了赌场的秘密…
+            - generic [ref=e428]:
+              - generic [ref=e429]: 百万播放
+              - generic [ref=e430]:
+                - img [ref=e431]
+                - generic "影视飓风" [ref=e435]
+              - paragraph [ref=e436]:
+                - generic [ref=e437]:
+                  - img [ref=e438]
+                  - text: 128.9万
+                - generic [ref=e441]:
+                  - img [ref=e442]
+                  - text: "5503"
+        - generic [ref=e448]:
+          - link [ref=e450] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV15q9jB6E2a
+            - img [ref=e451]
+          - generic [ref=e452] [cursor=pointer]:
+            - paragraph [ref=e453]: 【反转童话】如果这些故事的发展 是这样...
+            - generic [ref=e454]:
+              - generic [ref=e455]: 8万点赞
+              - generic [ref=e456]:
+                - img [ref=e457]
+                - generic "赤耳赤耳喵" [ref=e461]
+              - paragraph [ref=e462]:
+                - generic [ref=e463]:
+                  - img [ref=e464]
+                  - text: 44.3万
+                - generic [ref=e467]:
+                  - img [ref=e468]
+                  - text: "107"
+        - generic [ref=e474]:
+          - link [ref=e476] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1C49uBPEWS
+            - img [ref=e477]
+          - generic [ref=e478] [cursor=pointer]:
+            - paragraph [ref=e479]: 【虾米】生存大师？捡漏大师！方舟飞升试玩系列02
+            - generic [ref=e480]:
+              - generic [ref=e481]:
+                - img [ref=e482]
+                - generic "虾米的泪" [ref=e486]
+              - paragraph [ref=e487]:
+                - generic [ref=e488]:
+                  - img [ref=e489]
+                  - text: 23.2万
+                - generic [ref=e492]:
+                  - img [ref=e493]
+                  - text: "4610"
+        - generic [ref=e499]:
+          - link [ref=e501] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV17T9VBeEcp
+            - img [ref=e502]
+          - generic [ref=e503] [cursor=pointer]:
+            - paragraph [ref=e504]: 感谢这位同学的拼豆，同学，你也要有自己的爱好哟
+            - generic [ref=e505]:
+              - generic [ref=e506]: 百万播放
+              - generic [ref=e507]:
+                - img [ref=e508]
+                - generic "晓艳教英语" [ref=e512]
+              - paragraph [ref=e513]:
+                - generic [ref=e514]:
+                  - img [ref=e515]
+                  - text: 263.1万
+                - generic [ref=e518]:
+                  - img [ref=e519]
+                  - text: "1582"
+        - generic [ref=e525]:
+          - link [ref=e527] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1d59LBiE6e
+            - img [ref=e528]
+          - generic [ref=e529] [cursor=pointer]:
+            - paragraph [ref=e530]: 《李白》，但是李荣浩写给单依纯
+            - generic [ref=e531]:
+              - generic [ref=e532]: 7万点赞
+              - generic [ref=e533]:
+                - img [ref=e534]
+                - generic "181319" [ref=e538]
+              - paragraph [ref=e539]:
+                - generic [ref=e540]:
+                  - img [ref=e541]
+                  - text: 114.6万
+                - generic [ref=e544]:
+                  - img [ref=e545]
+                  - text: "640"
+        - generic [ref=e551]:
+          - link [ref=e553] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1GSXZBSE4Q
+            - img [ref=e554]
+          - generic [ref=e555] [cursor=pointer]:
+            - paragraph [ref=e556]: 猫和老鼠致敬过此段
+            - generic [ref=e557]:
+              - generic [ref=e558]: 百万播放
+              - generic [ref=e559]:
+                - img [ref=e560]
+                - generic "猫猫小日记" [ref=e564]
+              - paragraph [ref=e565]:
+                - generic [ref=e566]:
+                  - img [ref=e567]
+                  - text: 284.2万
+                - generic [ref=e570]:
+                  - img [ref=e571]
+                  - text: "473"
+        - generic [ref=e577]:
+          - link [ref=e579] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV171XjB3E1d
+            - img [ref=e580]
+          - generic [ref=e581] [cursor=pointer]:
+            - paragraph [ref=e582]: "\"风华绝代往事不过繁华落尽\""
+            - generic [ref=e583]:
+              - generic [ref=e584]: 15万点赞
+              - generic [ref=e585]:
+                - img [ref=e586]
+                - generic "我爱吃派大星" [ref=e590]
+              - paragraph [ref=e591]:
+                - generic [ref=e592]:
+                  - img [ref=e593]
+                  - text: 113万
+                - generic [ref=e596]:
+                  - img [ref=e597]
+                  - text: "559"
+        - generic [ref=e603]:
+          - link [ref=e605] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1dyXqBaEE5
+            - img [ref=e606]
+          - generic [ref=e607] [cursor=pointer]:
+            - paragraph [ref=e608]: 《崩坏：星穹铁道》动画短片：「Never Gonna Give You Up」
+            - generic [ref=e609]:
+              - generic [ref=e610]: 百万播放
+              - generic [ref=e611]:
+                - img [ref=e612]
+                - generic "帕姆的收藏夹" [ref=e616]
+              - paragraph [ref=e617]:
+                - generic [ref=e618]:
+                  - img [ref=e619]
+                  - text: 318.4万
+                - generic [ref=e622]:
+                  - img [ref=e623]
+                  - text: 1.6万
+        - generic [ref=e629]:
+          - link [ref=e631] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1gY9MB3ED4
+            - img [ref=e632]
+          - generic [ref=e633] [cursor=pointer]:
+            - paragraph [ref=e634]: 第三集：熊诡殊途
+            - generic [ref=e635]:
+              - generic [ref=e636]:
+                - img [ref=e637]
+                - generic "在下陈贯" [ref=e641]
+              - paragraph [ref=e642]:
+                - generic [ref=e643]:
+                  - img [ref=e644]
+                  - text: 5.9万
+                - generic [ref=e647]:
+                  - img [ref=e648]
+                  - text: "85"
+        - generic [ref=e654]:
+          - link [ref=e656] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1c19PB2Eun
+            - img [ref=e657]
+          - generic [ref=e658] [cursor=pointer]:
+            - paragraph [ref=e659]: 当我把英文版《蛋糕店里卖蛋糕》唱给老外听！！
+            - generic [ref=e660]:
+              - generic [ref=e661]:
+                - img [ref=e662]
+                - generic "你哇哥233" [ref=e666]
+              - paragraph [ref=e667]:
+                - generic [ref=e668]:
+                  - img [ref=e669]
+                  - text: 33.2万
+                - generic [ref=e672]:
+                  - img [ref=e673]
+                  - text: "649"
+  - generic [ref=e682]:
+    - generic [ref=e683]:
+      - generic [ref=e684]:
+        - generic [ref=e685]: bilibili
+        - generic [ref=e686]:
+          - link "关于我们" [ref=e687] [cursor=pointer]:
+            - /url: //www.bilibili.com/blackboard/aboutUs.html
+          - link "联系我们" [ref=e688] [cursor=pointer]:
+            - /url: //www.bilibili.com/blackboard/contact.html
+          - link "用户协议" [ref=e689] [cursor=pointer]:
+            - /url: //www.bilibili.com/protocal/licence.html
+          - link "加入我们" [ref=e690] [cursor=pointer]:
+            - /url: //www.bilibili.com/blackboard/join.html
+          - link "隐私协议" [ref=e691] [cursor=pointer]:
+            - /url: //www.bilibili.com/blackboard/privacy-pc.html
+          - link "bilibili认证" [ref=e692] [cursor=pointer]:
+            - /url: //account.bilibili.com/account/official/home
+          - link "Investor Relations" [ref=e693] [cursor=pointer]:
+            - /url: //ir.bilibili.com/
+      - generic [ref=e694]:
+        - generic [ref=e695]: 传送门
+        - generic [ref=e696]:
+          - link "协议汇总" [ref=e697] [cursor=pointer]:
+            - /url: //www.bilibili.com/blackboard/topic/activity-cn8bxPLzz.html
+          - link "活动中心" [ref=e698] [cursor=pointer]:
+            - /url: //www.bilibili.com/blackboard/activity-list.html
+          - link "活动专题页" [ref=e699] [cursor=pointer]:
+            - /url: //www.bilibili.com/blackboard/topic_list.html
+          - link "侵权申诉" [ref=e700] [cursor=pointer]:
+            - /url: //www.bilibili.com/v/copyright/intro/
+          - link "帮助中心" [ref=e701] [cursor=pointer]:
+            - /url: //www.bilibili.com/blackboard/help.html
+          - link "社区中心" [ref=e702] [cursor=pointer]:
+            - /url: https://www.bilibili.com/blackboard/activity-5zJxM3spoS.html
+          - link "壁纸站" [ref=e703] [cursor=pointer]:
+            - /url: //space.bilibili.com/6823116#/album
+          - link "广告合作" [ref=e704] [cursor=pointer]:
+            - /url: //e.bilibili.com/
+          - link "名人堂" [ref=e705] [cursor=pointer]:
+            - /url: //www.bilibili.com/blackboard/activity-S1jfy69Jz.html
+          - link "MCN管理中心" [ref=e706] [cursor=pointer]:
+            - /url: //mcn.bilibili.com/studio/mcn/entry
+          - link "高级弹幕" [ref=e707] [cursor=pointer]:
+            - /url: //www.bilibili.com/video/BV1Xx411c7cH/
+          - link "品牌号官网" [ref=e708] [cursor=pointer]:
+            - /url: //b.bilibili.com/
+      - generic [ref=e709]:
+        - link "下载APP" [ref=e711] [cursor=pointer]:
+          - /url: //app.bilibili.com/
+          - img [ref=e713]
+          - paragraph [ref=e715]: 下载APP
+        - link "公益" [ref=e717] [cursor=pointer]:
+          - /url: //love.bilibili.com/
+          - img [ref=e719]
+          - paragraph [ref=e724]: 公益
+        - link "官方微博" [ref=e726] [cursor=pointer]:
+          - /url: //weibo.com/bilibiliweb
+          - img [ref=e728]
+          - paragraph [ref=e730]: 官方微博
+        - generic [ref=e732]:
+          - img [ref=e734]
+          - paragraph [ref=e736]: 官方微信
+    - generic [ref=e739]:
+      - generic [ref=e740]:
+        - link "营业执照" [ref=e741] [cursor=pointer]:
+          - /url: //i0.hdslb.com/bfs/activity-plat/static/20240516/9ccf041718e5d6d6dfaebc91b85c791c/gd85E6tDco.jpg
+        - text: 信息网络传播视听节目许可证：0910417
+        - link "网络文化经营许可证 沪网文【2025】0258-085号" [ref=e742] [cursor=pointer]:
+          - /url: //i0.hdslb.com/bfs/activity-plat/static/20260209/3b3c5705bda98d50983f6f47df360fef/K4t52YryBV.jpeg
+        - text: 广播电视节目制作经营许可证：（沪）字第01248号增值电信业务经营许可证 沪B2-20100043
+      - generic [ref=e743]:
+        - link "互联网ICP备案：沪ICP备13002172号-3" [ref=e744] [cursor=pointer]:
+          - /url: //beian.miit.gov.cn/
+        - link "出版物经营许可证 沪批字第U6699 号" [ref=e745] [cursor=pointer]:
+          - /url: //i0.hdslb.com/bfs/activity-plat/static/20240516/9ccf041718e5d6d6dfaebc91b85c791c/4ainzbFKao.jpg
+        - text: 互联网药品信息服务资格证 沪-非经营性-2022-0011营业性演出许可证 沪市文演（经）00-2253 |
+      - generic [ref=e746]:
+        - link "不良信息举报邮箱：help@bilibili.com" [ref=e747] [cursor=pointer]:
+          - /url: mailto:help@bilibili.com
+        - link "涉未成年举报邮箱：teenprotect@bilibili.com" [ref=e748] [cursor=pointer]:
+          - /url: mailto:teenprotect@bilibili.com
+        - text: 不良信息举报电话：4006262233转3
+        - link "上海互联网举报中心 |" [ref=e750] [cursor=pointer]:
+          - /url: http://www.shjbzx.cn/
+        - link "12345政务服务便民热线 |" [ref=e751] [cursor=pointer]:
+          - /url: http://www.sh12345.gov.cn/
+      - generic [ref=e752]:
+        - link "沪公网安备31011002002436号 |" [ref=e754] [cursor=pointer]:
+          - /url: http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31011002002436
+        - link "儿童色情信息举报专区 |" [ref=e755] [cursor=pointer]:
+          - /url: mailto:userreport@bilibili.com
+        - link "扫黄打非举报" [ref=e756] [cursor=pointer]:
+          - /url: https://bzpt.shdf.gov.cn/www/shouye/gzfw/wsjb/index.shtml
+      - generic [ref=e757]:
+        - link "网信算备310110764385705230011号" [ref=e758] [cursor=pointer]:
+          - /url: https://beian.cac.gov.cn/api/static/fileUpload/principalOrithm/additional/user_699bbd78-36f4-459c-aeb0-bf98a2a562d8_6185ea2c-c84c-404a-9280-c5465af05948.pdf
+        - link "网信算备310110764385702230013号" [ref=e759] [cursor=pointer]:
+          - /url: https://beian.cac.gov.cn/api/static/fileUpload/principalOrithm/additional/user_699bbd78-36f4-459c-aeb0-bf98a2a562d8_e03e6855-76a6-43fb-b799-d090e7fce25d.pdf
+      - generic [ref=e760]:
+        - text: 网上有害信息举报专区：
+        - link "中国互联网违法和不良信息举报中心" [ref=e762] [cursor=pointer]:
+          - /url: https://www.12377.cn/
+        - text: 亲爱的市民朋友，上海警方反诈劝阻电话"96110"系专门针对避免您财产被骗受损而设，请您一旦收到来电，立即接听。
+      - generic [ref=e763]: 公司名称：上海宽娱数码科技有限公司 |公司地址：上海市杨浦区政立路489号 |电话：021-25099888
+    - generic [ref=e764]:
+      - img [ref=e765]
+      - img [ref=e766]
+      - img [ref=e767]
